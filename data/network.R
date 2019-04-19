@@ -15,14 +15,6 @@ posix2int <- function(created_at) {
   (y + m) - mn
 }
 
-# keep month-year
-my <- tt %>% 
-  select(created_at) %>% 
-  arrange(created_at) %>%
-  pull(created_at) %>%  
-  format("%m-%Y") %>% 
-  unique()
-
 # convert date
 tt <- tt %>% 
   mutate(
@@ -54,4 +46,10 @@ edges <- edges %>%
   ) %>% 
   select(id, source, target, appear = created_at, weight = n)
 
-save(my, edges, nodes, file = "./data/net.RData")
+n_tweets <- tt %>% 
+  group_by(created_at) %>% 
+  summarise(n = n()) %>% 
+  ungroup() %>% 
+  mutate(cs = cumsum(n))
+
+save(n_tweets, edges, nodes, file = "./data/net.RData")
