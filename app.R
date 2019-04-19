@@ -1,24 +1,10 @@
 library(shiny)
 library(shticky)
-library(echarts4r)
+library(sigmajs)
 library(waypointer)
 
-init <- data.frame(
-  x = runif(10, 1, 10),
-  y = runif(10, 1, 20)
-)
-
-step1 <- data.frame(
-  x = runif(100, 1, 10),
-  y = runif(100, 1, 20)
-)
-
-longdiv <- function(...){
-  div(
-    ...,
-    style = "height:100vh;"
-  )
-}
+load("./data/net.RData")
+source("functions.R")
 
 ui <- fluidPage(
   tags$head(
@@ -31,30 +17,48 @@ ui <- fluidPage(
   use_waypointer(),
   div(
     id = "stick",
-    echarts4rOutput("plot")
+    sigmajsOutput("graph")
   ),
   longdiv(
-    span(id = "waypoint1")
+    wp(1)
   ),
   longdiv(
-    span(id = "waypoint2")
+    wp(2)
   ),
-  longdiv()
+  longdiv(
+    wp(3)
+  ),
+  longdiv(
+    wp(4)
+  ),
+  longdiv(
+    wp(5)
+  ),
+  longdiv(
+    wp(6)
+  ),
+  longdiv(
+    wp(7)
+  ),
+  longdiv(
+    wp(8)
+  ),
+  longdiv(
+    wp(9)
+  )
 )
 
 server <- function(input, output, session) {
 
    w1 <- Waypoint$
     new(
-      "waypoint1",
-      offset = "50%"
+      "1"
     )$
     start()
 
    w2 <- Waypoint$
     new(
-      "waypoint2",
-      offset = "50%"
+      "2"
     )$
     start()
 
@@ -63,20 +67,17 @@ server <- function(input, output, session) {
     new("#stick")$
     shtick()
 
-  output$plot <- renderEcharts4r({
-    init %>% 
-      e_charts(x, draw = FALSE) %>% 
-      e_scatter(y)
+  output$graph <- renderSigmajs({
+    sigmajs()
   })
 
   observeEvent(w1$get_direction(), {
-    echarts4rProxy("plot") %>% 
-      e_draw_p()
+    if(w1$get_direction() == "down")
+      add_data(1)
   })
 
   observeEvent(w2$get_direction(), {
-    echarts4rProxy("plot") %>% 
-      e_append1_p(0, step1, x, y)
+
   })
   
 }
