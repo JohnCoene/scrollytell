@@ -4,7 +4,7 @@ library(shticky)
 library(sigmajs)
 library(waypointer)
 
-load("./data/net.RData")
+source("./data/network.R")
 source("functions.R")
 
 OFFSET <- "50%"
