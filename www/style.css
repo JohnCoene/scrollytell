@@ -50,3 +50,7 @@ body {
 .emph{
   font-size: 30px;
 }
+
+a:hover{
+  color: black;
+}

@@ -128,7 +128,15 @@ ui <- fluidPage(
       class = "light",
       style = "text-align:center;",
       h1("Thank you", class = "title"),
-      h1("hekasd", class = "subtitle")
+      h1(
+        class = "subtitle",
+        tags$a(
+          "Read the blog post",
+          target = "_blank",
+          class = "sg",
+          href = "https://john-coene.com/post/scrollytell/"
+        )
+      )
     )
   )
 )
@@ -164,7 +172,7 @@ server <- function(input, output, session) {
     start()
   
   w10 <- Waypoint$
-    new("m10", offset = "70%", animate = TRUE, animation = ANIMATION)$
+    new("m10", offset = "80%", animate = TRUE, animation = ANIMATION)$
     start()
 
   output$`1` <- renderUI({
@@ -224,7 +232,9 @@ server <- function(input, output, session) {
         defaultEdgeColor = "#c3c3c3",
         font = "Raleway",
         fontStyle = "sans-serif",
-        mouseWheelEnabled = FALSE
+        mouseWheelEnabled = FALSE,
+        labelSize = "proportional",
+        labelThreshold = 9999
       )
   })
 
@@ -262,6 +272,7 @@ server <- function(input, output, session) {
 
   observeEvent(w9$get_direction(), {
     if(w9$get_direction() == "down") add_data(9)
+    Sys.sleep(2)
     sigmajsProxy("graph") %>% 
       sg_force_stop_p()
   })
