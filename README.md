@@ -2,7 +2,7 @@
 
 Scrollytell with R
 
-Blog post: [john-coene.com/post/scrollytell/](https://john-coene.com/post/scrollytell/)
+Blog post: [blog.john-coene.com](https://blog.john-coene.com/posts/2019-11-17-scrollytell/)
 
 Main dependencies:
 
