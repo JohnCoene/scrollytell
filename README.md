@@ -2,8 +2,6 @@
 
 Scrollytell with R
 
-Blog post: [blog.john-coene.com](https://blog.john-coene.com/posts/2019-11-17-scrollytell/)
-
 Main dependencies:
 
 - [shiny](https://shiny.rstudio.com/)
